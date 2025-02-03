@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        .navbar {
+            background-color: #002C8A;
+            padding: 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+        }
+        .navbar a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+        }
+        .container {
+            margin-top: 40px;
+            background: transparent;
+            padding: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 15px;
+        }
+        .checkmark-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+        }
+        .checkmark {
+            width: 120px;
+            height: 140px;
+        }
+        .message {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        .btn-container {
+            margin-top: 25px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 75px;
+            background-color: #002C8A;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 15px;
+        }
+        .summary-container {
+            margin-top: 25px;
+            padding: 25px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 15px;
+            background: transparent;
+        }
+        .summary-link {
+            display: block;
+            color: #0044CC;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <strong>PayPal</strong>
+        </div>
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Send</a>
+            <a href="#">Wallet</a>
+            <a href="#">Activity</a>
+            <a href="#">Help</a>
+        </div>
+        <div>
+            <a href="#">Log Out</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="checkmark-container">
+            <img src="checkmark.png" alt="Checkmark" class="checkmark">
+        </div>
+        <div class="message">You've just sent $90,905 to <normal>t</normal></div>
+        <div class="btn-container">
+            <a href="indexx.html" class="btn">Send More Money</a>
+            <a href="index.html" class="summary-link">Go to summary</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userName = localStorage.getItem("userName") || "Someone";
+            const sentAmount = localStorage.getItem("sentAmount") || "0.00";
+    
+            document.querySelector(".message").innerHTML = `You've just sent $${sentAmount} to <normal>${userName}</normal>`;
+        });
+    </script>
+    <script>
+        function deductBalance(amount) {
+            localStorage.setItem("deductAmount", amount);
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container Box */
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+/* Profile Section */
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    background: #007bff;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-info {
+    margin-left: 12px;
+    text-align: left;
+}
+
+.user-info h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.user-info p {
+    margin: 0;
+    color: gray;
+    font-size: 14px;
+}
+
+/* Transfer Form */
+.transfer-form {
+    text-align: left;
+}
+
+/* Balance Input (Centered) */
+.balance-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.balance-container input {
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+}
+
+
+.balance-container select {
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+/* Recipient Amount Display */
+.currency-container {
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+#receiveAmount {
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    background: transparent;
+    text-align: left;
+}
+
+/* Exchange Rate Text */
+.exchange-rate-info {
+    font-size: 12px;
+    color: gray;
+    margin-bottom: 10px;
+}
+
+/* Text Area */
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Buttons Container */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Send Button */
+#sendButton {
+    width: 80px;
+    padding: 8px;
+    background: #d3d3d3;
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: not-allowed;
+}
+
+#sendButton.active {
+    background: #007bff;
+    cursor: pointer;
+}
+
+/* Cancel Link */
+.cancel {
+    display: block;
+    margin-top: 10px;
+    color: #007bff;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+/* Footer */
+.footer-text {
+    font-size: 12px;
+    color: gray;
+    margin-top: 15px;
+    text-align: center;
+}
+/* Send Button - Default */
+#sendButton {
+    width: 120px;
+    padding: 12px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: not-allowed;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Active Send Button */
+#sendButton.active {
+    cursor: pointer;
+    box-shadow: 0px 6px 10px rgba(0, 114, 255, 0.4);
+    transform: scale(1.05);
+}
+
+/* Hover Effect */
+#sendButton.active:hover {
+    box-shadow: 0px 8px 15px rgba(0, 114, 255, 0.6);
+    transform: scale(1.1);
+}
+ /* Loading Overlay */
+ .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-circle {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0, 0, 255, 0.3);
+            border-top: 5px solid blue;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Profile Section -->
+        <div class="profile">
+            <div class="avatar">YS</div>
+            <div class="user-info">
+                <h2>Yurii Stepanets</h2>
+                <p>@YStepanets</p>
+            </div>
+        </div>
+
+        <!-- Transfer Form -->
+        <div class="transfer-form">
+            <label for="sendAmount">You send</label>
+            <div class="balance-container">
+                <input type="number" id="sendAmount" placeholder="0.00">
+                <select id="sendCurrency">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                </select>
+            </div>
+
+            <textarea placeholder="What's this for?"></textarea>
+        </div>
+
+    </div>
+    <br>
+     <!-- Footer -->
+     <p class="footer-text">For more information please read our <a href="#">user agreement</a>.</p>
+  <!-- Send and Cancel Buttons -->
+  <div class="button-container">
+    <button id="sendButton" disabled>Send</button>
+    <a href="#" class="cancel">Cancel</a>
+</div>
+    
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-circle"></div>
+</div>
+
+<script>
+    document.getElementById("sendButton").addEventListener("click", function() {
+        document.body.style.opacity = "0.2"; // Make page transparent
+        document.getElementById("loadingOverlay").classList.add("active");
+
+        setTimeout(() => {
+            window.location.href = "final.html"; // Redirect after 3 seconds
+        }, 3000);
+    });
+</script>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userName = localStorage.getItem("userName") || "Guest";
+            const avatar = document.querySelector(".avatar");
+            const userInfoName = document.querySelector(".user-info h2");
+            const userInfoTag = document.querySelector(".user-info p");
+    
+            // Update user name
+            userInfoName.textContent = userName;
+            userInfoTag.textContent = "@" + userName.replace(/\s+/g, "").toLowerCase(); // Convert to username format
+    
+            // Get first letter and set as avatar text
+            const firstLetter = userName.charAt(0).toUpperCase();
+            avatar.textContent = firstLetter;
+    
+            // Generate random color for avatar background
+            function getRandomColor() {
+                return "#" + Math.floor(Math.random() * 16777215).toString(16);
+            }
+    
+            avatar.style.backgroundColor = getRandomColor();
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const sendAmount = document.getElementById("sendAmount");
+            const sendButton = document.getElementById("sendButton");
+    
+            function updateButtonState() {
+                let amount = sendAmount.value.trim(); // Get input value
+                amount = amount.replace(/,/g, ""); // Remove commas if any
+                
+                if (!isNaN(amount) && amount > 0) {
+                    sendButton.classList.add("active");
+                    sendButton.disabled = false;
+                } else {
+                    sendButton.classList.remove("active");
+                    sendButton.disabled = true;
+                }
+            }
+    
+            sendAmount.addEventListener("input", updateButtonState);
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userName = localStorage.getItem("userName") || "Guest";
+            document.querySelector(".user-info h2").textContent = userName;
+            document.querySelector(".user-info p").textContent = "@" + userName.replace(/\s+/g, "").toLowerCase();
+    
+            // Avatar First Letter
+            document.querySelector(".avatar").textContent = userName.charAt(0).toUpperCase();
+        });
+    
+        document.getElementById("sendButton").addEventListener("click", function() {
+            const amount = document.getElementById("sendAmount").value.trim();
+            if (amount.length > 0 && !isNaN(amount)) {
+                localStorage.setItem("sentAmount", amount); // Save amount
+            }
+    
+            document.body.style.opacity = "0.2"; // Make page transparent
+            document.getElementById("loadingOverlay").classList.add("active");
+    
+            setTimeout(() => {
+                window.location.href = "final.html"; // Redirect to final.html
+            }, 3000);
+        });
+    </script>
+    
+</body>
+</html>
+

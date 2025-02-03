@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #003087;
+            color: white;
+            padding: 15px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px;
+        }
+
+        .send-money-box {
+            flex: 2;
+        }
+
+        .more-options {
+            flex: 1;
+            text-align: right;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        .next-btn {
+            background-color: #ccc;
+            color: #666666;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            cursor: not-allowed;
+            font-size: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f1f1f1;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-circle {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(0, 0, 0, 0.1);
+            border-top: 8px solid black;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loaded-content {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loaded-content img {
+            max-width: 80%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Activity</a></li>
+            <li><a href="#">Pay & Get Paid</a></li>
+            <li><a href="#">Marketing For Growth</a></li>
+            <li><a href="#">Business Tools</a></li>
+        </ul>
+    </nav>
+
+    <div class="container" id="mainContent">
+        <div class="send-money-box">
+            <h2>Send Money</h2>
+            <input type="text" id="recipient" placeholder="Name, username, email, mobile">
+            <br>
+            <br>
+            <button class="next-btn" id="nextBtn">Next</button>
+            <br>
+            <br>
+            <br>
+            <br>
+            <img src="contacts.png" width="400px" height="100px">
+            <p><a href="#">Show all contacts</a></p>
+        </div>
+        <div class="more-options">
+            <h2>More ways to send</h2>
+            <p>Send an invoice</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Help | Contact | Fees | Security | About | Developers | Partners</p>
+    </footer>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-circle"></div>
+    </div>
+    <script>
+        document.getElementById("recipient").addEventListener("input", function() {
+            const nextBtn = document.getElementById("nextBtn");
+            if (this.value.trim().length > 0) {
+                nextBtn.style.backgroundColor = "#0070ba";
+                nextBtn.style.color = "white";
+                nextBtn.style.cursor = "pointer";
+                nextBtn.disabled = false;
+            } else {
+                nextBtn.style.backgroundColor = "#ccc";
+                nextBtn.style.color = "#666";
+                nextBtn.style.cursor = "not-allowed";
+                nextBtn.disabled = true;
+            }
+        });
+    
+        document.getElementById("nextBtn").addEventListener("click", function() {
+            const nameInput = document.getElementById("recipient").value.trim();
+    
+            if (nameInput.length > 0) {
+                // Save name to localStorage
+                localStorage.setItem("userName", nameInput);
+            }
+    
+            const overlay = document.getElementById("loadingOverlay");
+            overlay.classList.add("active");
+    
+            setTimeout(() => {
+                overlay.classList.remove("active");
+                window.location.href = "send.html"; // Redirect to idex.html
+            }, 3000);
+        });
+    </script>
+    <script>
+        document.getElementById("recipient").addEventListener("input", function() {
+            const nextBtn = document.getElementById("nextBtn");
+            if (this.value.trim().length > 0) {
+                nextBtn.style.backgroundColor = "#0070ba";
+                nextBtn.style.color = "white";
+                nextBtn.style.cursor = "pointer";
+                nextBtn.disabled = false;
+            } else {
+                nextBtn.style.backgroundColor = "#ccc";
+                nextBtn.style.color = "#666";
+                nextBtn.style.cursor = "not-allowed";
+                nextBtn.disabled = true;
+            }
+        });
+    
+        document.getElementById("nextBtn").addEventListener("click", function() {
+            const nameInput = document.getElementById("recipient").value.trim();
+            if (nameInput.length > 0) {
+                localStorage.setItem("userName", nameInput); // Save name
+            }
+    
+            const overlay = document.getElementById("loadingOverlay");
+            overlay.classList.add("active");
+    
+            setTimeout(() => {
+                overlay.classList.remove("active");
+                window.location.href = "send.html"; // Redirect to send.html
+            }, 3000);
+        });
+    </script>
+    
+    
+</body>
+</html>
